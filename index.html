@@ -1,838 +1,655 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Yash Patidar — Cybersecurity Analyst</title>
-<meta name="description" content="Cybersecurity analyst. Enterprise vulnerability management and SIEM triage at FIS Global. MSc Cybersecurity, King's College London. Top 1% TryHackMe.">
+<title>Capability Assessment — Yash Patidar, Cybersecurity Analyst</title>
+<meta name="description" content="Yash Patidar — cybersecurity analyst. Enterprise vulnerability management and SIEM operations at FIS Global. MSc Cybersecurity, King's College London. London, UK.">
 <meta name="author" content="Yash Patidar">
-
-<!-- Social preview -->
 <meta property="og:title" content="Yash Patidar — Cybersecurity Analyst">
-<meta property="og:description" content="Vulnerability management, SIEM triage, offensive practice. London.">
-<meta property="og:type" content="website">
-
-<!-- Inline favicon: amber prompt block -->
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230a0c10'/%3E%3Ctext x='4' y='23' font-family='monospace' font-size='20' fill='%23ffb000'%3E%3E_%3C/text%3E%3C/svg%3E">
-
+<meta property="og:description" content="Vulnerability management, security operations, application testing. London, UK.">
+<meta property="og:type" content="profile">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230a0d13'/%3E%3Crect x='6' y='7' width='20' height='2.5' fill='%2346a758'/%3E%3Crect x='6' y='14' width='14' height='2.5' fill='%23798393'/%3E%3Crect x='6' y='21' width='17' height='2.5' fill='%23798393'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
 
 <style>
-/* ============================================================
-   TOKENS
-   Amber phosphor terminal — VT/3270 heritage, not matrix green.
-   ============================================================ */
+
 :root{
-  --bg:        #0a0c10;
-  --bg-panel:  #0f1319;
-  --bg-raise:  #141922;
-  --amber:     #ffb000;
-  --amber-dim: #a87400;
-  --phosphor:  #57d98a;   /* used sparingly: status + success */
-  --crit:      #ff5555;
-  --text:      #c6ccd6;
-  --muted:     #6f7986;
-  --rule:      rgba(255,176,0,.16);
-  --rule-soft: rgba(198,204,214,.10);
-
-  --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  --sans: "IBM Plex Sans", system-ui, -apple-system, Segoe UI, sans-serif;
-
-  --maxw: 1120px;
-  --pad:  clamp(1.15rem, 4vw, 2.75rem);
+  --bg:#0a0d13; --panel:#10141c; --raise:#161b25; --raise2:#1c222d;
+  --line:#232a37; --line-soft:#1a202b;
+  --ink:#d3d9e3; --ink-hi:#f0f3f8; --muted:#78828f;
+  --link:#5aa9ff;
+  --crit:#e5484d; --high:#f2711c; --med:#f5b800; --low:#46a758; --info:#5aa9ff;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --maxw:1240px;
 }
-
 *{box-sizing:border-box}
-html{scroll-behavior:smooth; scroll-padding-top:5rem}
+html{scroll-behavior:smooth;scroll-padding-top:6.5rem}
 body{
-  margin:0;
-  background:var(--bg);
-  color:var(--text);
-  font-family:var(--sans);
-  font-size:16px;
-  line-height:1.65;
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:var(--mono);font-size:15px;line-height:1.6;
   -webkit-font-smoothing:antialiased;
-  overflow-x:hidden;
+}
+a{color:var(--link);text-decoration:none}
+a:hover{text-decoration:underline;text-underline-offset:3px}
+:focus-visible{outline:2px solid var(--link);outline-offset:2px}
+.shell{max-width:var(--maxw);margin:0 auto;padding:0 clamp(1rem,3.5vw,2.25rem)}
+
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:1rem;top:1rem;z-index:999;background:var(--raise);padding:.6rem 1rem;border:1px solid var(--link)}
+
+/* ── Classification banner ── */
+.tlp{
+  position:sticky;top:0;z-index:100;
+  background:#0d1118;border-bottom:1px solid var(--line);
+  font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;
+}
+.tlp .shell{display:flex;align-items:center;gap:1rem;height:2.1rem;justify-content:space-between}
+.tlp .mark{color:var(--low);font-weight:700}
+.tlp .mark::before{content:"■ ";}
+.tlp .ref{color:var(--muted)}
+@media(max-width:640px){.tlp .ref{display:none}}
+
+/* ── Document header ── */
+.dochead{border-bottom:1px solid var(--line);padding:clamp(2.25rem,5vw,3.75rem) 0 clamp(1.75rem,4vw,2.5rem)}
+.dochead .shell{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:clamp(1.5rem,4vw,3.5rem);align-items:end}
+.doctype{font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);margin:0 0 1rem}
+.dochead h1{
+  font-family:var(--mono);font-weight:700;
+  font-size:clamp(1.9rem,5.2vw,3.15rem);line-height:1.04;letter-spacing:-.035em;
+  margin:0 0 .55rem;color:var(--ink-hi);
+}
+.subject{font-size:clamp(.85rem,2.2vw,1rem);color:var(--ink);margin:0 0 1.15rem;font-weight:400}
+.subject b{color:var(--low);font-weight:500}
+.headline{font-family:var(--serif);font-size:clamp(1rem,2.4vw,1.16rem);line-height:1.55;color:var(--ink);margin:0;max-width:54ch}
+
+.metagrid{display:grid;grid-template-columns:repeat(2,auto);gap:.15rem 1.75rem;font-size:.72rem;white-space:nowrap}
+.metagrid dt{color:var(--muted);letter-spacing:.12em;text-transform:uppercase}
+.metagrid dd{margin:0 0 .55rem;color:var(--ink-hi)}
+.metagrid dd.ok{color:var(--low)}
+@media(max-width:900px){
+  .dochead .shell{grid-template-columns:1fr}
+  .metagrid{grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.15rem 1rem}
 }
 
-/* CRT atmosphere: scanlines + vignette. Deliberately faint. */
-body::before{
-  content:"";
-  position:fixed; inset:0; z-index:9990; pointer-events:none;
-  background:repeating-linear-gradient(
-    to bottom,
-    rgba(0,0,0,0) 0px,
-    rgba(0,0,0,0) 2px,
-    rgba(0,0,0,.16) 3px,
-    rgba(0,0,0,0) 4px
-  );
-  opacity:.5;
+/* ── Layout: sticky contents + document body ── */
+.doc{display:grid;grid-template-columns:216px minmax(0,1fr);gap:clamp(1.5rem,4vw,3.25rem);padding:2.5rem 0 0}
+.toc{position:sticky;top:4.25rem;align-self:start;max-height:calc(100vh - 6rem);overflow-y:auto}
+.toc h2{font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin:0 0 .85rem;font-weight:500}
+.toc ol{list-style:none;margin:0;padding:0;border-left:1px solid var(--line)}
+.toc li a{
+  display:flex;gap:.6rem;padding:.42rem 0 .42rem .85rem;
+  font-size:.76rem;color:var(--muted);border-left:2px solid transparent;margin-left:-1px;
 }
-body::after{
-  content:"";
-  position:fixed; inset:0; z-index:9989; pointer-events:none;
-  background:radial-gradient(ellipse at 50% 40%, transparent 55%, rgba(0,0,0,.55) 100%);
+.toc li a:hover{color:var(--ink);text-decoration:none}
+.toc li a.on{color:var(--low);border-left-color:var(--low)}
+.toc li a .n{color:var(--line);flex-shrink:0}
+.toc li a.on .n{color:var(--low)}
+.toc .tools{margin-top:1.35rem;display:flex;flex-direction:column;gap:.5rem}
+.btn{
+  display:block;width:100%;text-align:left;cursor:pointer;
+  background:var(--raise);border:1px solid var(--line);color:var(--ink);
+  font-family:var(--mono);font-size:.72rem;padding:.5rem .7rem;letter-spacing:.04em;
 }
-
-a{color:var(--amber); text-decoration:none}
-a:hover{text-decoration:underline; text-underline-offset:3px}
-:focus-visible{outline:2px solid var(--amber); outline-offset:3px; border-radius:2px}
-
-.wrap{max-width:var(--maxw); margin:0 auto; padding:0 var(--pad)}
-
-/* ============================================================
-   BOOT OVERLAY
-   ============================================================ */
-#boot{
-  position:fixed; inset:0; z-index:9995;
-  background:var(--bg);
-  display:flex; align-items:center; justify-content:center;
-  font-family:var(--mono); font-size:.85rem;
-  transition:opacity .45s ease;
-}
-#boot.gone{opacity:0; pointer-events:none}
-#boot-log{width:min(560px, 88vw); color:var(--amber-dim)}
-#boot-log b{color:var(--phosphor); font-weight:500}
-#boot-log .ln{white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
-#boot-skip{
-  position:absolute; bottom:2rem; left:50%; transform:translateX(-50%);
-  background:none; border:1px solid var(--rule); color:var(--muted);
-  font-family:var(--mono); font-size:.7rem; letter-spacing:.14em;
-  padding:.5rem 1rem; cursor:pointer; text-transform:uppercase;
-}
-#boot-skip:hover{color:var(--amber); border-color:var(--amber)}
-
-/* ============================================================
-   STATUS BAR
-   ============================================================ */
-.statusbar{
-  position:sticky; top:0; z-index:9000;
-  background:rgba(10,12,16,.92);
-  backdrop-filter:blur(8px);
-  border-bottom:1px solid var(--rule);
-  font-family:var(--mono); font-size:.75rem;
-}
-.statusbar .wrap{
-  display:flex; align-items:center; gap:1.5rem;
-  height:3.25rem;
-}
-.host{color:var(--phosphor); white-space:nowrap}
-.host .sep{color:var(--muted)}
-.host .path{color:var(--amber)}
-.navlinks{display:flex; gap:1.35rem; margin-left:auto; overflow-x:auto; scrollbar-width:none}
-.navlinks::-webkit-scrollbar{display:none}
-.navlinks a{color:var(--muted); white-space:nowrap; letter-spacing:.02em}
-.navlinks a:hover{color:var(--amber); text-decoration:none}
-.navlinks a::before{content:"./"; color:var(--rule-soft)}
-@media (max-width:720px){
-  .host{display:none}
-  .navlinks{margin-left:0}
+.btn:hover{border-color:var(--low);color:var(--low)}
+@media(max-width:900px){
+  .doc{grid-template-columns:1fr;gap:1.5rem}
+  .toc{position:static;max-height:none;border-bottom:1px solid var(--line);padding-bottom:1.25rem}
+  .toc ol{display:flex;gap:.25rem;overflow-x:auto;border-left:0;padding-bottom:.4rem}
+  .toc li a{border-left:0;border-bottom:2px solid transparent;padding:.35rem .6rem;white-space:nowrap}
+  .toc li a.on{border-bottom-color:var(--low)}
+  .toc .tools{flex-direction:row}
+  .btn{width:auto}
 }
 
-/* ============================================================
-   HERO
-   ============================================================ */
-.hero{padding:clamp(3.5rem,9vw,7rem) 0 clamp(2.5rem,6vw,4.5rem)}
-.eyebrow{
-  font-family:var(--mono); font-size:.72rem; letter-spacing:.28em;
-  text-transform:uppercase; color:var(--amber-dim); margin:0 0 1.4rem;
-}
-.hero h1{
-  font-family:var(--mono); font-weight:600;
-  font-size:clamp(2.4rem, 8vw, 5rem);
-  line-height:.98; letter-spacing:-.03em;
-  margin:0 0 1rem; color:#f2f5f9;
-}
-.hero h1 .flick{color:var(--amber)}
-.hero .role{
-  font-family:var(--mono); font-size:clamp(.9rem,2.4vw,1.1rem);
-  color:var(--amber); margin:0 0 1.6rem; min-height:1.6em;
-}
-.cursor{
-  display:inline-block; width:.55em; height:1.05em;
-  background:var(--amber); vertical-align:-.15em; margin-left:.1em;
-  animation:blink 1.05s step-end infinite;
-}
-@keyframes blink{50%{opacity:0}}
-.hero .lede{
-  max-width:62ch; font-size:clamp(1rem,2.4vw,1.12rem); color:var(--text); margin:0 0 2.2rem;
-}
-.hero .lede strong{color:#e8ecf2; font-weight:500}
-
-.meta-strip{
-  display:flex; flex-wrap:wrap; gap:.5rem;
-  font-family:var(--mono); font-size:.74rem;
-}
-.chip{
-  border:1px solid var(--rule); color:var(--muted);
-  padding:.4rem .7rem; letter-spacing:.05em;
-}
-.chip b{color:var(--amber); font-weight:500}
-.chip.live b{color:var(--phosphor)}
-
-/* ============================================================
-   INTERACTIVE TERMINAL — the signature element
-   ============================================================ */
-.term{
-  margin-top:2.75rem;
-  background:var(--bg-panel);
-  border:1px solid var(--rule);
-  box-shadow:0 0 0 1px rgba(0,0,0,.4), 0 24px 60px -30px rgba(255,176,0,.25);
-}
-.term-bar{
-  display:flex; align-items:center; gap:.6rem;
-  padding:.55rem .85rem;
-  border-bottom:1px solid var(--rule);
-  font-family:var(--mono); font-size:.7rem; color:var(--muted);
-  letter-spacing:.1em; text-transform:uppercase;
-}
-.dot{width:9px; height:9px; border-radius:50%; background:var(--amber-dim); opacity:.75}
-.dot:nth-child(2){background:#4a5260}
-.dot:nth-child(3){background:#4a5260}
-.term-bar span{margin-left:auto; text-transform:none; letter-spacing:.04em}
-.term-body{
-  font-family:var(--mono); font-size:.83rem; line-height:1.75;
-  padding:1rem .95rem 1.1rem;
-  height:clamp(210px, 30vh, 300px);
-  overflow-y:auto;
-  scrollbar-width:thin; scrollbar-color:var(--amber-dim) transparent;
-}
-.term-body::-webkit-scrollbar{width:7px}
-.term-body::-webkit-scrollbar-thumb{background:var(--amber-dim)}
-.term-body p{margin:0; white-space:pre-wrap; word-break:break-word}
-.term-body .cmd{color:#f2f5f9}
-.term-body .cmd .ps1{color:var(--phosphor)}
-.term-body .ok{color:var(--phosphor)}
-.term-body .warn{color:var(--amber)}
-.term-body .crit{color:var(--crit)}
-.term-body .dim{color:var(--muted)}
-.term-input-row{
-  display:flex; align-items:center; gap:.5rem;
-  border-top:1px solid var(--rule);
-  padding:.65rem .95rem;
-  font-family:var(--mono); font-size:.83rem;
-}
-.term-input-row .ps1{color:var(--phosphor); white-space:nowrap}
-#term-input{
-  flex:1; background:none; border:none; outline:none;
-  color:#f2f5f9; font-family:var(--mono); font-size:.83rem;
-  caret-color:var(--amber); min-width:0;
-}
-#term-input::placeholder{color:#39404c}
-
-/* ============================================================
-   SECTIONS — sticky path rail + content
-   ============================================================ */
-.section{
-  padding:clamp(3rem,7vw,5.5rem) 0;
-  border-top:1px solid var(--rule-soft);
-}
-.section .wrap{display:grid; grid-template-columns:200px 1fr; gap:clamp(1.5rem,5vw,4rem)}
-.rail{position:sticky; top:5.25rem; align-self:start}
-.rail h2{
-  font-family:var(--mono); font-weight:500; font-size:.95rem;
-  color:var(--amber); margin:0 0 .5rem; letter-spacing:.01em;
-}
-.rail p{font-family:var(--mono); font-size:.7rem; color:var(--muted); margin:0; line-height:1.5}
-@media (max-width:800px){
-  .section .wrap{grid-template-columns:1fr; gap:1.5rem}
-  .rail{position:static}
-  .rail{border-left:2px solid var(--amber); padding-left:.8rem}
-}
-
-.prose p{max-width:66ch; margin:0 0 1.15rem}
+/* ── Sections ── */
+.sec{padding:0 0 clamp(2.75rem,6vw,4.25rem);scroll-margin-top:5.5rem}
+.sec-head{display:flex;align-items:baseline;gap:.85rem;border-bottom:1px solid var(--line);padding-bottom:.6rem;margin:0 0 1.5rem}
+.sec-head .num{font-size:.82rem;color:var(--low);font-weight:700;flex-shrink:0}
+.sec-head h2{font-size:.86rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-hi);margin:0;font-weight:500}
+.prose{font-family:var(--serif);font-size:1.045rem;line-height:1.72;max-width:70ch}
+.prose p{margin:0 0 1.05rem}
 .prose p:last-child{margin-bottom:0}
-.prose strong{color:#e8ecf2; font-weight:500}
+.prose b{color:var(--ink-hi);font-weight:600}
+.note{font-size:.75rem;color:var(--muted);line-height:1.65;margin:1.25rem 0 0;border-left:2px solid var(--line);padding-left:.85rem;max-width:74ch}
 
-/* Experience entries */
-.entry{
-  border-left:1px solid var(--rule);
-  padding:0 0 2.4rem 1.35rem;
-  position:relative;
-}
-.entry:last-child{padding-bottom:0}
-.entry::before{
-  content:""; position:absolute; left:-4px; top:.55rem;
-  width:7px; height:7px; background:var(--amber);
-}
-.entry.past::before{background:var(--muted)}
-.entry .when{
-  font-family:var(--mono); font-size:.72rem; color:var(--muted);
-  letter-spacing:.08em; margin:0 0 .35rem; text-transform:uppercase;
-}
-.entry h3{
-  font-family:var(--mono); font-weight:600; font-size:1.05rem;
-  color:#f2f5f9; margin:0 0 .2rem; letter-spacing:-.01em;
-}
-.entry .org{font-family:var(--mono); font-size:.82rem; color:var(--amber); margin:0 0 .9rem}
-.entry .org .loc{color:var(--muted)}
-.entry ul{margin:0; padding:0; list-style:none}
-.entry li{
-  position:relative; padding-left:1.1rem; margin-bottom:.65rem;
-  max-width:64ch; font-size:.965rem;
-}
-.entry li::before{
-  content:"▸"; position:absolute; left:0; top:-.05em;
-  color:var(--amber-dim); font-size:.85em;
-}
-.entry li:last-child{margin-bottom:0}
+/* ── Metrics ── */
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin:0 0 1.75rem}
+.metric{background:var(--panel);padding:.95rem 1rem}
+.metric .v{font-size:1.5rem;font-weight:700;color:var(--ink-hi);letter-spacing:-.03em;line-height:1.1}
+.metric .l{font-size:.65rem;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-top:.3rem}
 
-/* Skills */
-.stack{display:grid; gap:1.15rem}
-.stack-block{border:1px solid var(--rule-soft); background:var(--bg-panel); padding:1rem 1.1rem}
-.stack-block h3{
-  font-family:var(--mono); font-size:.72rem; letter-spacing:.18em;
-  text-transform:uppercase; color:var(--amber); margin:0 0 .75rem; font-weight:500;
+/* ── Tables ── */
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);background:var(--panel)}
+table{width:100%;border-collapse:collapse;font-size:.78rem;min-width:560px}
+thead th{
+  text-align:left;font-weight:500;font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--muted);padding:.65rem .85rem;border-bottom:1px solid var(--line);background:var(--raise);white-space:nowrap;
 }
-.tags{display:flex; flex-wrap:wrap; gap:.4rem}
-.tag{
-  font-family:var(--mono); font-size:.76rem;
-  background:var(--bg-raise); border:1px solid var(--rule-soft);
-  color:var(--text); padding:.3rem .6rem;
+tbody td{padding:.6rem .85rem;border-bottom:1px solid var(--line-soft);vertical-align:top}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover td{background:var(--raise)}
+td.ref a{color:var(--link);font-weight:500}
+td.tool{color:var(--ink-hi)}
+.pill{
+  display:inline-block;font-size:.63rem;letter-spacing:.1em;text-transform:uppercase;
+  padding:.16rem .5rem;border:1px solid;white-space:nowrap;font-weight:500;
 }
-.tag:hover{border-color:var(--amber); color:var(--amber)}
+.p-prod{color:var(--low);border-color:rgba(70,167,88,.45);background:rgba(70,167,88,.09)}
+.p-work{color:var(--med);border-color:rgba(245,184,0,.4);background:rgba(245,184,0,.08)}
+.p-lab{color:var(--info);border-color:rgba(90,169,255,.38);background:rgba(90,169,255,.08)}
 
-/* Proof cards */
-.cards{display:grid; gap:1rem; grid-template-columns:repeat(auto-fit,minmax(255px,1fr))}
-.card{
-  border:1px solid var(--rule-soft); background:var(--bg-panel);
-  padding:1.15rem 1.2rem; transition:border-color .2s ease, transform .2s ease;
+/* ── Filter bar ── */
+.filters{display:flex;gap:.4rem;flex-wrap:wrap;margin:0 0 .85rem}
+.filters button{
+  background:var(--panel);border:1px solid var(--line);color:var(--muted);
+  font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;
+  padding:.35rem .7rem;cursor:pointer;
 }
-.card:hover{border-color:var(--rule); transform:translateY(-2px)}
-.card .kicker{
-  font-family:var(--mono); font-size:.68rem; letter-spacing:.18em;
-  text-transform:uppercase; color:var(--muted); margin:0 0 .5rem;
-}
-.card h3{font-family:var(--mono); font-size:1rem; color:#f2f5f9; margin:0 0 .1rem; font-weight:600}
-.card .score{font-family:var(--mono); font-size:.8rem; color:var(--phosphor); margin:0 0 .65rem}
-.card p{margin:0; font-size:.93rem; color:var(--text)}
+.filters button:hover{color:var(--ink)}
+.filters button[aria-pressed="true"]{color:var(--low);border-color:var(--low);background:rgba(70,167,88,.08)}
+.legend{font-size:.72rem;color:var(--muted);margin:.9rem 0 0;line-height:1.7;max-width:76ch}
+.legend b{color:var(--ink);font-weight:500}
 
-/* Contact */
-.contact-grid{display:grid; gap:.65rem; max-width:520px}
-.contact-row{
-  display:flex; align-items:baseline; gap:.9rem;
-  border-bottom:1px solid var(--rule-soft); padding-bottom:.65rem;
-  font-family:var(--mono); font-size:.9rem; flex-wrap:wrap;
-}
-.contact-row .k{color:var(--muted); font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; width:5.5rem; flex-shrink:0}
-.status-note{
-  font-family:var(--mono); font-size:.78rem; color:var(--muted);
-  margin-top:1.5rem; border-left:2px solid var(--phosphor); padding-left:.85rem; line-height:1.7;
+/* ── Assessment entries ── */
+.item{border:1px solid var(--line);background:var(--panel);margin:0 0 1.15rem;scroll-margin-top:5.5rem}
+.item-head{display:flex;align-items:center;gap:.9rem;padding:.75rem .95rem;border-bottom:1px solid var(--line);background:var(--raise);flex-wrap:wrap}
+.item-head .id{font-size:.72rem;color:var(--low);font-weight:700;letter-spacing:.06em}
+.item-head h3{font-size:.92rem;color:var(--ink-hi);margin:0;font-weight:500;flex:1;min-width:180px}
+.item-head .stat{font-size:.63rem;letter-spacing:.12em;text-transform:uppercase;color:var(--low);border:1px solid rgba(70,167,88,.45);padding:.16rem .5rem;background:rgba(70,167,88,.09)}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1px;background:var(--line-soft);border-bottom:1px solid var(--line)}
+.fact{background:var(--panel);padding:.65rem .95rem}
+.fact dt{font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:.15rem}
+.fact dd{margin:0;font-size:.78rem;color:var(--ink-hi);line-height:1.5}
+.item-body{padding:1rem .95rem 1.1rem}
+.blk{margin:0 0 1.2rem}
+.blk:last-child{margin-bottom:0}
+.blk h4{font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:0 0 .55rem;font-weight:500}
+.blk ul{margin:0;padding:0;list-style:none}
+.blk li{position:relative;padding-left:1.15rem;margin-bottom:.55rem;font-family:var(--serif);font-size:.99rem;line-height:1.62;max-width:76ch}
+.blk li:last-child{margin-bottom:0}
+.blk li::before{content:"—";position:absolute;left:0;color:var(--line);font-family:var(--mono)}
+.blk p{font-family:var(--serif);font-size:.99rem;line-height:1.62;margin:0;max-width:76ch}
+
+/* ── Evidence rows ── */
+.ev{border:1px solid var(--line);background:var(--panel)}
+.ev-row{display:grid;grid-template-columns:78px minmax(0,1fr) auto;gap:1rem;padding:.85rem .95rem;border-bottom:1px solid var(--line-soft);align-items:baseline}
+.ev-row:last-child{border-bottom:0}
+.ev-row:hover{background:var(--raise)}
+.ev-row .id{font-size:.7rem;color:var(--muted);letter-spacing:.06em}
+.ev-row h3{font-size:.86rem;color:var(--ink-hi);margin:0 0 .2rem;font-weight:500}
+.ev-row p{font-family:var(--serif);font-size:.95rem;color:var(--ink);margin:0;line-height:1.58;max-width:70ch}
+.ev-row .val{font-size:.72rem;color:var(--low);white-space:nowrap;text-align:right}
+@media(max-width:640px){
+  .ev-row{grid-template-columns:1fr;gap:.3rem}
+  .ev-row .val{text-align:left}
 }
 
-/* Footer */
-footer{
-  border-top:1px solid var(--rule-soft);
-  padding:2rem 0 3rem;
-  font-family:var(--mono); font-size:.72rem; color:var(--muted);
-}
-footer .wrap{display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap}
+/* ── Contact ── */
+.contact{border:1px solid var(--line);background:var(--panel)}
+.c-row{display:grid;grid-template-columns:130px minmax(0,1fr);gap:1rem;padding:.75rem .95rem;border-bottom:1px solid var(--line-soft);font-size:.82rem;align-items:baseline}
+.c-row:last-child{border-bottom:0}
+.c-row .k{font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.c-row .v{color:var(--ink-hi)}
+.c-row .v.ok{color:var(--low)}
+@media(max-width:560px){.c-row{grid-template-columns:1fr;gap:.2rem}}
+.copybtn{background:none;border:1px solid var(--line);color:var(--muted);font-family:var(--mono);font-size:.62rem;padding:.12rem .42rem;cursor:pointer;margin-left:.5rem;letter-spacing:.08em}
+.copybtn:hover{color:var(--low);border-color:var(--low)}
 
-/* Scroll reveal */
-.reveal{opacity:0; transform:translateY(14px); transition:opacity .6s ease, transform .6s ease}
-.reveal.seen{opacity:1; transform:none}
+/* ── Footer / doc control ── */
+footer{border-top:1px solid var(--line);margin-top:1.5rem;padding:1.5rem 0 3rem;font-size:.7rem;color:var(--muted)}
+footer .shell{display:flex;justify-content:space-between;gap:1.25rem;flex-wrap:wrap;align-items:baseline}
+footer .hash{word-break:break-all;max-width:100%}
+footer code{color:var(--muted);font-size:.68rem}
 
-@media (prefers-reduced-motion:reduce){
-  html{scroll-behavior:auto}
-  *{animation:none !important; transition:none !important}
-  .reveal{opacity:1; transform:none}
-  body::before{display:none}
-}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
 
+/* ── Print: this is a document, so it should print like one ── */
 @media print{
-  body::before, body::after, .term, .statusbar, #boot{display:none !important}
-  body{background:#fff; color:#000}
-  a{color:#000}
-  .section{border-color:#ccc}
+  :root{--ink:#000;--ink-hi:#000;--muted:#444;--line:#bbb;--line-soft:#ddd;--low:#000;--link:#000}
+  body{background:#fff;color:#000;font-size:10.5pt}
+  .tlp{position:static;border-bottom:2px solid #000}
+  .toc,.filters,.copybtn,.tools,.skip{display:none!important}
+  .doc{grid-template-columns:1fr;padding-top:1rem}
+  .item,.ev,.contact,.tbl-wrap,.metrics{border-color:#999;background:#fff;break-inside:avoid;page-break-inside:avoid}
+  .item-head,.metric,.fact,thead th{background:#f2f2f2!important}
+  .sec{page-break-inside:auto}
+  .sec-head{border-bottom:1px solid #000}
+  a::after{content:" (" attr(href) ")";font-size:8pt;color:#555}
+  a[href^="#"]::after{content:""}
 }
 </style>
 </head>
 <body>
+<a class="skip" href="#s1">Skip to report</a>
 
-<!-- ============ BOOT ============ -->
-<div id="boot" role="status" aria-label="Loading">
-  <div id="boot-log"></div>
-  <button id="boot-skip" type="button">Skip</button>
+<!-- ══ Classification marking (TLP 2.0) ══ -->
+<div class="tlp">
+  <div class="shell">
+    <span class="mark">TLP:CLEAR — Unrestricted distribution</span>
+    <span class="ref">Ref YP/CA/2026-08 · Rev 2.0</span>
+  </div>
 </div>
 
-<!-- ============ STATUS BAR ============ -->
-<header class="statusbar">
-  <div class="wrap">
-    <div class="host">yash<span class="sep">@</span>london<span class="sep">:</span><span class="path">~</span></div>
-    <nav class="navlinks" aria-label="Sections">
-      <a href="#whoami">whoami</a>
-      <a href="#experience">experience</a>
-      <a href="#stack">stack</a>
-      <a href="#proof">proof</a>
-      <a href="#contact">contact</a>
-    </nav>
+<!-- ══ Document header ══ -->
+<header class="dochead">
+  <div class="shell">
+    <div>
+      <p class="doctype">Capability Assessment</p>
+      <h1>Yash Patidar</h1>
+      <p class="subject">Cybersecurity Analyst · London, UK · <b>Available</b></p>
+      <p class="headline">
+        Assessment of practical security capability, evidenced against 20 months of industry
+        experience in enterprise vulnerability management and security operations within a
+        regulated financial services environment.
+      </p>
+    </div>
+    <dl class="metagrid">
+      <dt>Subject</dt><dd>Y. Patidar</dd>
+      <dt>Prepared</dt><dd>August 2026</dd>
+      <dt>Coverage</dt><dd>2022 – present</dd>
+      <dt>Status</dt><dd class="ok">Open to roles</dd>
+    </dl>
   </div>
 </header>
 
-<!-- ============ HERO ============ -->
-<main>
-<section class="hero">
-  <div class="wrap">
-    <p class="eyebrow">Cybersecurity Analyst — London, UK</p>
-    <h1>Yash<span class="flick">_</span>Patidar</h1>
-    <p class="role" id="typed" aria-live="polite"></p>
-    <p class="lede">
-      I spent <strong>20 months at FIS Global</strong>, a Fortune 500 fintech, running enterprise
-      vulnerability management and working SIEM triage across a regulated global estate. I'm now doing an
-      <strong>MSc in Cybersecurity at King's College London</strong>. Defensive by day; offensive practice
-      on my own time — <strong>top 1% globally on TryHackMe</strong>.
+<div class="shell">
+<div class="doc">
+
+  <!-- ══ Contents ══ -->
+  <nav class="toc" aria-label="Contents">
+    <h2>Contents</h2>
+    <ol>
+      <li><a href="#s1"><span class="n">1.0</span> Executive summary</a></li>
+      <li><a href="#s2"><span class="n">2.0</span> Scope &amp; method</a></li>
+      <li><a href="#s3"><span class="n">3.0</span> Capability assessment</a></li>
+      <li><a href="#s4"><span class="n">4.0</span> Technical inventory</a></li>
+      <li><a href="#s5"><span class="n">5.0</span> Evidence</a></li>
+      <li><a href="#s6"><span class="n">6.0</span> Contact</a></li>
+    </ol>
+    <div class="tools">
+      <button class="btn" id="print-btn" type="button">↓ Export / print</button>
+      <a class="btn" href="https://linkedin.com/in/yashpatidar1" target="_blank" rel="noopener">↗ LinkedIn profile</a>
+    </div>
+  </nav>
+
+  <main>
+
+  <!-- ══ 1.0 ══ -->
+  <section class="sec" id="s1">
+    <div class="sec-head"><span class="num">1.0</span><h2>Executive summary</h2></div>
+
+    <div class="metrics">
+      <div class="metric"><div class="v">20</div><div class="l">Months industry</div></div>
+      <div class="metric"><div class="v">500–1k</div><div class="l">Findings managed</div></div>
+      <div class="metric"><div class="v">10–50</div><div class="l">SIEM alerts / week</div></div>
+      <div class="metric"><div class="v">Top 1%</div><div class="l">TryHackMe global</div></div>
+      <div class="metric"><div class="v">4</div><div class="l">Frameworks mapped</div></div>
+    </div>
+
+    <div class="prose">
+      <p>
+        I spent seventeen months at <b>FIS Global</b>, a Fortune 500 financial technology firm, owning
+        the vulnerability management lifecycle across a global, multi-site estate and working SIEM
+        triage alongside it. The environment was regulated, the kit was mixed, and a meaningful share
+        of it could not simply be patched on a Tuesday.
+      </p>
+      <p>
+        That constraint is where most of what I know came from. Anyone can produce a scan report. The
+        work is deciding what actually matters when the exploit intelligence shifts, negotiating a
+        compensating control for a legacy AIX host inside a change freeze, and writing the residual
+        risk up clearly enough that a director accepts it <b>knowingly</b> rather than by default.
+      </p>
+      <p>
+        I am now completing an <b>MSc in Cybersecurity at King's College London</b>, working part-time
+        alongside it, and keeping offensive practice current — <b>top 1% globally on TryHackMe</b>
+        across penetration testing, web exploitation and reverse engineering. I hold CompTIA Security+,
+        write Python comfortably, and have built and shipped small tools on LangChain and LLM APIs.
+      </p>
+    </div>
+
+    <p class="note">
+      Summary of assurance: four engagements assessed at section 3.0, all evidenced by direct
+      participation. Tooling depth is rated honestly at section 4.0 — production experience is
+      distinguished from lab practice rather than presented as equivalent.
     </p>
+  </section>
 
-    <div class="meta-strip">
-      <div class="chip">FIS Global <b>· 20 months</b></div>
-      <div class="chip">MSc <b>· KCL</b></div>
-      <div class="chip">CompTIA <b>· Security+</b></div>
-      <div class="chip live">Status <b>· open to roles</b></div>
-    </div>
-
-    <!-- SIGNATURE: a terminal that actually works -->
-    <div class="term">
-      <div class="term-bar">
-        <i class="dot"></i><i class="dot"></i><i class="dot"></i>
-        <span>bash — try: help</span>
-      </div>
-      <div class="term-body" id="term-body" aria-live="polite"></div>
-      <label class="term-input-row" for="term-input">
-        <span class="ps1">yash@london:~$</span>
-        <input id="term-input" type="text" autocomplete="off" spellcheck="false"
-               placeholder="type a command…" aria-label="Terminal command input">
-      </label>
-    </div>
-  </div>
-</section>
-
-<!-- ============ WHOAMI ============ -->
-<section class="section" id="whoami">
-  <div class="wrap">
-    <div class="rail reveal">
-      <h2>~/whoami</h2>
-      <p>Who I am and what I actually do.</p>
-    </div>
-    <div class="prose reveal">
+  <!-- ══ 2.0 ══ -->
+  <section class="sec" id="s2">
+    <div class="sec-head"><span class="num">2.0</span><h2>Scope &amp; method</h2></div>
+    <div class="prose">
       <p>
-        My background is a mix of defensive and offensive work. Day to day at FIS that meant scanning,
-        validating, prioritising and chasing remediation across a global estate — and writing the reports
-        that went to people who had to make budget decisions off them.
+        This document covers professional security work from January 2022 to the present, across four
+        organisations: one enterprise financial services employer, two internships, and one volunteer
+        open-source engagement. Bar and events work held alongside postgraduate study is out of scope
+        here and appears on the full CV.
       </p>
       <p>
-        The part I got good at was translation. Turning an unauthenticated RCE on an internet-facing
-        appliance into something a non-technical director can act on is a different skill from finding it,
-        and a lot of the job was exactly that.
-      </p>
-      <p>
-        Outside work it has meant hands-on offensive practice: penetration testing, web exploitation and
-        reverse engineering. I write Python comfortably and have built and shipped small tools using
-        LangChain and LLM APIs.
+        Each entry at section 3.0 records the environment, the period, what I was responsible for, and
+        what came out of it. Where a claim is measurable I have given the number; where it is not, I
+        have said what I did rather than inflating it into a metric.
       </p>
     </div>
-  </div>
-</section>
+    <p class="note">
+      Rating scale used throughout section 4.0 — <b>Production</b>: used routinely in a live enterprise
+      environment with real consequences for error. <b>Working</b>: used to complete real assessments,
+      projects or engagements. <b>Lab</b>: practised in controlled environments and CTFs, not yet run
+      in production. Ratings are self-assessed and stated conservatively.
+    </p>
+  </section>
 
-<!-- ============ EXPERIENCE ============ -->
-<section class="section" id="experience">
-  <div class="wrap">
-    <div class="rail reveal">
-      <h2>~/experience</h2>
-      <p>Reverse chronological. Newest first.</p>
+  <!-- ══ 3.0 ══ -->
+  <section class="sec" id="s3">
+    <div class="sec-head"><span class="num">3.0</span><h2>Capability assessment</h2></div>
+
+    <div class="tbl-wrap" style="margin-bottom:1.5rem">
+      <table>
+        <thead><tr><th>Ref</th><th>Area</th><th>Organisation</th><th>Period</th><th>Evidence</th></tr></thead>
+        <tbody>
+          <tr><td class="ref"><a href="#cap-001">CAP-001</a></td><td class="tool">Vulnerability management &amp; security operations</td><td>FIS Global</td><td>May 2024 – Sep 2025</td><td><span class="pill p-prod">Direct</span></td></tr>
+          <tr><td class="ref"><a href="#cap-002">CAP-002</a></td><td class="tool">Application testing &amp; ISMS gap assessment</td><td>Mitt Arv</td><td>Mar – Apr 2024</td><td><span class="pill p-prod">Direct</span></td></tr>
+          <tr><td class="ref"><a href="#cap-003">CAP-003</a></td><td class="tool">OSINT investigation &amp; security tooling</td><td>Cybereconn</td><td>May – Nov 2023</td><td><span class="pill p-prod">Direct</span></td></tr>
+          <tr><td class="ref"><a href="#cap-004">CAP-004</a></td><td class="tool">Vulnerability research &amp; documentation</td><td>Information Warfare Centre</td><td>Jan – Jul 2022</td><td><span class="pill p-work">Volunteer</span></td></tr>
+        </tbody>
+      </table>
     </div>
-    <div class="reveal">
 
-      <article class="entry">
-        <p class="when">May 2024 — Sept 2025</p>
-        <h3>IT Security Analyst</h3>
-        <p class="org">FIS Global <span class="loc">· Remote</span></p>
-        <ul>
-          <li>Owned the vulnerability lifecycle end to end — scheduled and ad-hoc scans in Rapid7 InsightVM and Qualys, hand-validating findings to strip false positives, then turning the output into risk-ranked reports that named owners and deadlines rather than just listing CVEs.</li>
-          <li>Worked a standing backlog of roughly 500–1,000 open findings, re-prioritising as new scan data came in and as exploit intelligence changed the picture on items that had been parked.</li>
-          <li>Handled network-layer findings across Cisco switching and routing, IBM AIX hosts and F5 BIG-IP appliances. Where patching wasn't viable — legacy kit, change freezes, vendor dependencies — I worked out compensating controls and documented residual risk so the business could accept it knowingly rather than by default.</li>
-          <li>Mapped findings back to the frameworks the business was audited against: NIST CSF, ISO 27001, HIPAA, PCI-DSS. Telling a stakeholder which control they were failing, not just which CVE they had, was usually what got things moving.</li>
-          <li>Ran remediation with business units and patching teams — check-ins, escalation when SLAs slipped, verification scans afterwards. Mean-time-to-remediate came down across the programmes I tracked.</li>
-          <li>Triaged 10–50 Splunk alerts a week, correlating events across sources, closing out noise, and escalating real incidents with enough context that whoever picked it up didn't start from nothing.</li>
-          <li>Investigated anomalies with no matching playbook and no clean signature — working back from evidence to root cause without taking production down to do it.</li>
-        </ul>
-      </article>
+    <!-- CAP-001 -->
+    <article class="item" id="cap-001">
+      <div class="item-head">
+        <span class="id">CAP-001</span>
+        <h3>Enterprise vulnerability management &amp; security operations</h3>
+        <span class="stat">Verified</span>
+      </div>
+      <dl class="facts">
+        <div class="fact"><dt>Organisation</dt><dd>FIS Global — IT Security Analyst</dd></div>
+        <div class="fact"><dt>Period</dt><dd>May 2024 – Sept 2025 · 17 months</dd></div>
+        <div class="fact"><dt>Environment</dt><dd>Global multi-site financial services, remote</dd></div>
+        <div class="fact"><dt>Frameworks in scope</dt><dd>NIST CSF · ISO 27001 · HIPAA · PCI-DSS</dd></div>
+      </dl>
+      <div class="item-body">
+        <div class="blk">
+          <h4>Responsibility</h4>
+          <p>Owned the vulnerability lifecycle end to end across the estate, and shared the SIEM triage rota alongside it.</p>
+        </div>
+        <div class="blk">
+          <h4>Work performed</h4>
+          <ul>
+            <li>Ran scheduled and ad-hoc scanning in Rapid7 InsightVM and Qualys, hand-validating output to strip false positives before anything reached an asset owner.</li>
+            <li>Maintained a standing backlog of roughly 500–1,000 open findings, re-prioritising as fresh scan data arrived and as exploit intelligence changed the picture on items previously parked.</li>
+            <li>Handled network-layer findings across Cisco switching and routing, IBM AIX hosts and F5 BIG-IP appliances. Where patching was not viable — legacy kit, change freezes, vendor dependencies — designed compensating controls and documented the residual risk for formal acceptance.</li>
+            <li>Mapped findings to the control frameworks the business was audited against. Telling a stakeholder which control they were failing, not merely which CVE they held, was usually what unblocked remediation.</li>
+            <li>Drove remediation with business units and patching teams: scheduled check-ins, escalation on SLA breach, and verification scanning afterwards to confirm the fix had actually landed.</li>
+            <li>Triaged 10–50 Splunk alerts a week, correlating across sources, closing noise, and escalating genuine incidents with sufficient context that the next responder did not restart the investigation.</li>
+            <li>Investigated anomalies with no matching playbook and no clean signature, working from evidence back to root cause without taking production services down to do it.</li>
+          </ul>
+        </div>
+        <div class="blk">
+          <h4>Outcome</h4>
+          <ul>
+            <li>Mean time to remediate fell across the programmes tracked.</li>
+            <li>Authored the reporting line to senior stakeholders — translating findings such as an unauthenticated RCE on an internet-facing appliance into a decision a non-technical director could act on.</li>
+            <li>Became the informal first point of contact for security questions from teams outside IT: suspected phishing, software safety, and what a given policy meant in practice.</li>
+          </ul>
+        </div>
+      </div>
+    </article>
 
-      <article class="entry past">
-        <p class="when">Mar 2024 — Apr 2024</p>
-        <h3>Cybersecurity Intern</h3>
-        <p class="org">Mitt Arv <span class="loc">· Hyderabad, India</span></p>
-        <ul>
-          <li>Supported the ISO 27001 rollout: reviewed where existing practice already met the standard and where it didn't, and wrote the gaps up for the team leading certification.</li>
-          <li>Tested live web applications — found IDOR, stored and reflected XSS, and several broken access control issues where role checks were enforced in the interface but not on the underlying API.</li>
-          <li>Wrote each finding up with reproduction steps and a suggested fix, then sat with the engineers to agree what was realistic to change and in what order.</li>
-        </ul>
-      </article>
+    <!-- CAP-002 -->
+    <article class="item" id="cap-002">
+      <div class="item-head">
+        <span class="id">CAP-002</span>
+        <h3>Web application testing &amp; ISO 27001 gap assessment</h3>
+        <span class="stat">Verified</span>
+      </div>
+      <dl class="facts">
+        <div class="fact"><dt>Organisation</dt><dd>Mitt Arv — Cybersecurity Intern</dd></div>
+        <div class="fact"><dt>Period</dt><dd>Mar – Apr 2024</dd></div>
+        <div class="fact"><dt>Environment</dt><dd>On-site, small engineering team, Hyderabad</dd></div>
+        <div class="fact"><dt>Classes found</dt><dd>IDOR · Stored &amp; reflected XSS · Broken access control</dd></div>
+      </dl>
+      <div class="item-body">
+        <div class="blk">
+          <h4>Work performed</h4>
+          <ul>
+            <li>Supported the ISO 27001 rollout — reviewed where existing practice already met the standard and where it did not, and documented the gaps for the team leading certification.</li>
+            <li>Tested live web applications and identified IDOR, stored and reflected XSS, and several broken access control issues where role checks were enforced in the interface but not on the underlying API.</li>
+            <li>Wrote each finding up with reproduction steps and a proposed fix, then worked through with the engineers what was realistic to change and in what order.</li>
+          </ul>
+        </div>
+      </div>
+    </article>
 
-      <article class="entry past">
-        <p class="when">May 2023 — Nov 2023</p>
-        <h3>Cybersecurity Intern</h3>
-        <p class="org">Cybereconn <span class="loc">· Remote</span></p>
-        <ul>
-          <li>Ran OSINT investigations into personal information exposed around educational institutions — staff and student data recoverable from public sources, metadata left in published documents — and reported both the findings and what could realistically be done about them.</li>
-          <li>Built an internal chatbot on LangChain with an LLM backend, connected to the team's own material. Handled ingestion, chunking, retrieval and prompt design.</li>
-          <li>Worked with the team on live infrastructure assessments, documenting five to ten vulnerabilities across the engagement.</li>
-        </ul>
-      </article>
+    <!-- CAP-003 -->
+    <article class="item" id="cap-003">
+      <div class="item-head">
+        <span class="id">CAP-003</span>
+        <h3>OSINT investigation &amp; internal security tooling</h3>
+        <span class="stat">Verified</span>
+      </div>
+      <dl class="facts">
+        <div class="fact"><dt>Organisation</dt><dd>Cybereconn — Cybersecurity Intern</dd></div>
+        <div class="fact"><dt>Period</dt><dd>May – Nov 2023 · 7 months</dd></div>
+        <div class="fact"><dt>Environment</dt><dd>Remote, collaborative research team</dd></div>
+        <div class="fact"><dt>Output</dt><dd>5–10 documented vulnerabilities · 1 internal tool</dd></div>
+      </dl>
+      <div class="item-body">
+        <div class="blk">
+          <h4>Work performed</h4>
+          <ul>
+            <li>Ran OSINT investigations into personal information exposed around educational institutions — staff and student data recoverable from public sources, metadata left in published documents — and reported both the exposure and what could realistically be done to reduce it.</li>
+            <li>Built an internal chatbot on LangChain with an LLM backend, connected to the team's own material so colleagues could query it in plain English instead of searching documentation. Handled ingestion, chunking, retrieval and prompt design.</li>
+            <li>Contributed to live infrastructure assessments with the wider team, documenting five to ten vulnerabilities across the engagement.</li>
+          </ul>
+        </div>
+      </div>
+    </article>
 
-      <article class="entry past">
-        <p class="when">Jan 2022 — Jul 2022</p>
-        <h3>Volunteer Security Researcher</h3>
-        <p class="org">Information Warfare Centre <span class="loc">· Remote</span></p>
-        <ul>
-          <li>Wrote vulnerability documentation for the CSI Linux ISO, an open-source distribution used for OSINT and digital forensics. Aimed at people learning the material, so the write-ups had to explain why something mattered, not only how to reproduce it.</li>
-          <li>Worked through the OWASP Top 10 systematically, building lab examples of each class and documenting mitigations that address root cause rather than symptom.</li>
-        </ul>
-      </article>
+    <!-- CAP-004 -->
+    <article class="item" id="cap-004">
+      <div class="item-head">
+        <span class="id">CAP-004</span>
+        <h3>Vulnerability research &amp; documentation, CSI Linux</h3>
+        <span class="stat">Verified</span>
+      </div>
+      <dl class="facts">
+        <div class="fact"><dt>Organisation</dt><dd>Information Warfare Centre — Volunteer Researcher</dd></div>
+        <div class="fact"><dt>Period</dt><dd>Jan – Jul 2022 · 7 months</dd></div>
+        <div class="fact"><dt>Environment</dt><dd>Open-source OSINT / DFIR distribution</dd></div>
+        <div class="fact"><dt>Audience</dt><dd>Practitioners learning the material</dd></div>
+      </dl>
+      <div class="item-body">
+        <div class="blk">
+          <h4>Work performed</h4>
+          <ul>
+            <li>Wrote vulnerability documentation for the CSI Linux ISO. The audience was learning, so each write-up had to explain why something mattered, not only how to reproduce it.</li>
+            <li>Worked through the OWASP Top 10 systematically, building lab examples of each class and documenting mitigations that address root cause rather than symptom.</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+  </section>
 
+  <!-- ══ 4.0 ══ -->
+  <section class="sec" id="s4">
+    <div class="sec-head"><span class="num">4.0</span><h2>Technical inventory</h2></div>
+
+    <div class="filters" role="group" aria-label="Filter by depth">
+      <button type="button" data-f="all" aria-pressed="true">All</button>
+      <button type="button" data-f="prod" aria-pressed="false">Production only</button>
+      <button type="button" data-f="work" aria-pressed="false">Working</button>
+      <button type="button" data-f="lab" aria-pressed="false">Lab</button>
     </div>
-  </div>
-</section>
 
-<!-- ============ STACK ============ -->
-<section class="section" id="stack">
-  <div class="wrap">
-    <div class="rail reveal">
-      <h2>~/stack</h2>
-      <p>Tools I've used in anger, not just read about.</p>
+    <div class="tbl-wrap">
+      <table id="inv">
+        <thead><tr><th>Technology</th><th>Domain</th><th>Depth</th><th>Context</th></tr></thead>
+        <tbody>
+          <tr data-d="prod"><td class="tool">Rapid7 InsightVM</td><td>Vulnerability management</td><td><span class="pill p-prod">Production</span></td><td>Scan config, validation, remediation tracking at FIS</td></tr>
+          <tr data-d="prod"><td class="tool">Qualys</td><td>Vulnerability management</td><td><span class="pill p-prod">Production</span></td><td>Parallel scanning and reconciliation at FIS</td></tr>
+          <tr data-d="prod"><td class="tool">Splunk</td><td>Security operations</td><td><span class="pill p-prod">Production</span></td><td>Alert triage, correlation, escalation</td></tr>
+          <tr data-d="prod"><td class="tool">NIST CSF</td><td>Framework</td><td><span class="pill p-prod">Production</span></td><td>Finding-to-control mapping for audit</td></tr>
+          <tr data-d="prod"><td class="tool">ISO 27001</td><td>Framework</td><td><span class="pill p-prod">Production</span></td><td>Audit mapping at FIS; gap assessment at Mitt Arv</td></tr>
+          <tr data-d="prod"><td class="tool">PCI-DSS</td><td>Framework</td><td><span class="pill p-prod">Production</span></td><td>Control mapping in a regulated estate</td></tr>
+          <tr data-d="prod"><td class="tool">HIPAA</td><td>Framework</td><td><span class="pill p-prod">Production</span></td><td>Control mapping in a regulated estate</td></tr>
+          <tr data-d="prod"><td class="tool">F5 BIG-IP</td><td>Infrastructure</td><td><span class="pill p-prod">Production</span></td><td>Appliance-level findings and compensating controls</td></tr>
+          <tr data-d="prod"><td class="tool">IBM AIX</td><td>Infrastructure</td><td><span class="pill p-prod">Production</span></td><td>Legacy host remediation and risk acceptance</td></tr>
+          <tr data-d="prod"><td class="tool">Cisco routing &amp; switching</td><td>Networking</td><td><span class="pill p-prod">Production</span></td><td>Network-layer finding remediation</td></tr>
+          <tr data-d="work"><td class="tool">Burp Suite</td><td>Application security</td><td><span class="pill p-work">Working</span></td><td>Live application testing at Mitt Arv</td></tr>
+          <tr data-d="work"><td class="tool">OWASP Top 10</td><td>Application security</td><td><span class="pill p-work">Working</span></td><td>Systematic lab coverage; findings in live apps</td></tr>
+          <tr data-d="work"><td class="tool">Python</td><td>Engineering</td><td><span class="pill p-work">Working</span></td><td>Tooling, automation, retrieval applications</td></tr>
+          <tr data-d="work"><td class="tool">LangChain / LLM APIs</td><td>Engineering</td><td><span class="pill p-work">Working</span></td><td>Shipped internal chatbot; personal projects</td></tr>
+          <tr data-d="work"><td class="tool">Bash</td><td>Engineering</td><td><span class="pill p-work">Working</span></td><td>Day-to-day scripting and host work</td></tr>
+          <tr data-d="work"><td class="tool">Git</td><td>Engineering</td><td><span class="pill p-work">Working</span></td><td>Version control across projects</td></tr>
+          <tr data-d="work"><td class="tool">Wireshark</td><td>Networking</td><td><span class="pill p-work">Working</span></td><td>Packet and network-level analysis</td></tr>
+          <tr data-d="work"><td class="tool">OSINT methodology</td><td>Investigation</td><td><span class="pill p-work">Working</span></td><td>Institutional exposure investigations</td></tr>
+          <tr data-d="lab"><td class="tool">Nessus</td><td>Vulnerability management</td><td><span class="pill p-lab">Lab</span></td><td>Scanning practice outside production</td></tr>
+          <tr data-d="lab"><td class="tool">Reverse engineering</td><td>Offensive</td><td><span class="pill p-lab">Lab</span></td><td>TryHackMe and CTF, sustained top 1%</td></tr>
+          <tr data-d="lab"><td class="tool">Penetration testing</td><td>Offensive</td><td><span class="pill p-lab">Lab</span></td><td>TryHackMe labs; adjacent to live app testing</td></tr>
+        </tbody>
+      </table>
     </div>
-    <div class="stack reveal">
-      <div class="stack-block">
-        <h3>Vulnerability management</h3>
-        <div class="tags">
-          <span class="tag">Rapid7 InsightVM</span><span class="tag">Qualys</span><span class="tag">Nessus</span>
-          <span class="tag">Scan configuration</span><span class="tag">Validation</span><span class="tag">Prioritisation</span>
-          <span class="tag">Remediation tracking</span>
-        </div>
+    <p class="legend">
+      <b>Depth</b> is stated conservatively. A tool is only marked <b>Production</b> where it was used
+      routinely in a live enterprise environment with real consequences for getting it wrong.
+      Offensive skills sit at <b>Lab</b> because sustained practice is not the same as a signed
+      engagement, and pretending otherwise is how people get found out in interviews.
+    </p>
+  </section>
+
+  <!-- ══ 5.0 ══ -->
+  <section class="sec" id="s5">
+    <div class="sec-head"><span class="num">5.0</span><h2>Evidence &amp; attestations</h2></div>
+    <div class="ev">
+      <div class="ev-row">
+        <span class="id">EV-01</span>
+        <div><h3>CompTIA Security+</h3><p>Threat management, cryptography, identity and access management, network security.</p></div>
+        <span class="val">767 / 900</span>
       </div>
-      <div class="stack-block">
-        <h3>Security operations</h3>
-        <div class="tags">
-          <span class="tag">Splunk (SIEM)</span><span class="tag">Alert triage</span><span class="tag">Event correlation</span>
-          <span class="tag">Incident escalation</span><span class="tag">Log analysis</span>
-        </div>
+      <div class="ev-row">
+        <span class="id">EV-02</span>
+        <div><h3>TryHackMe</h3><p>Sustained across penetration testing, web exploitation, reverse engineering and CTF. This is where the offensive practice happens — the closest thing to adversarial conditions available outside a live engagement.</p></div>
+        <span class="val">Top 1% global</span>
       </div>
-      <div class="stack-block">
-        <h3>Offensive &amp; testing</h3>
-        <div class="tags">
-          <span class="tag">Burp Suite</span><span class="tag">Web app testing</span><span class="tag">OWASP Top 10</span>
-          <span class="tag">OSINT methodology</span><span class="tag">CTF</span>
-        </div>
+      <div class="ev-row">
+        <span class="id">EV-03</span>
+        <div><h3>MSc Cybersecurity</h3><p>King's College London. Network security, applied cryptography, digital forensics, malware analysis, secure software engineering.</p></div>
+        <span class="val">2025 – present</span>
       </div>
-      <div class="stack-block">
-        <h3>Networking</h3>
-        <div class="tags">
-          <span class="tag">TCP/IP</span><span class="tag">Cisco</span><span class="tag">F5 BIG-IP</span>
-          <span class="tag">IBM AIX</span><span class="tag">Wireshark</span><span class="tag">Packet forensics</span>
-        </div>
+      <div class="ev-row">
+        <span class="id">EV-04</span>
+        <div><h3>BSc Computer Science</h3><p>Shaheed Sukhdev College of Business Studies, New Delhi. Recognised for outstanding contribution to the ACM Society.</p></div>
+        <span class="val">2023</span>
       </div>
-      <div class="stack-block">
-        <h3>Frameworks</h3>
-        <div class="tags">
-          <span class="tag">NIST CSF</span><span class="tag">ISO 27001</span><span class="tag">HIPAA</span><span class="tag">PCI-DSS</span>
-        </div>
+      <div class="ev-row">
+        <span class="id">EV-05</span>
+        <div><h3>The Bits and Bytes of Computer Networking</h3><p>Google. Protocols, packet analysis and infrastructure fundamentals — fed directly into the network-level work at FIS.</p></div>
+        <span class="val">96.31%</span>
       </div>
-      <div class="stack-block">
-        <h3>Programming</h3>
-        <div class="tags">
-          <span class="tag">Python</span><span class="tag">Bash</span><span class="tag">LangChain</span>
-          <span class="tag">LLM APIs</span><span class="tag">Git</span>
-        </div>
+      <div class="ev-row">
+        <span class="id">EV-06</span>
+        <div><h3>LangChain Book Reader</h3><p>Python application that ingests full-length books and answers natural-language questions across the whole text. Built to understand how retrieval degrades when the source document is far larger than any context window.</p></div>
+        <span class="val">Personal project</span>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ============ PROOF ============ -->
-<section class="section" id="proof">
-  <div class="wrap">
-    <div class="rail reveal">
-      <h2>~/proof</h2>
-      <p>Certifications, practice and things I've built.</p>
+  <!-- ══ 6.0 ══ -->
+  <section class="sec" id="s6">
+    <div class="sec-head"><span class="num">6.0</span><h2>Contact</h2></div>
+    <div class="contact">
+      <div class="c-row"><span class="k">Email</span><span class="v"><a href="mailto:yash.patidar@kcl.ac.uk">yash.patidar@kcl.ac.uk</a><button class="copybtn" id="copy-email" type="button">Copy</button></span></div>
+      <div class="c-row"><span class="k">LinkedIn</span><span class="v"><a href="https://linkedin.com/in/yashpatidar1" target="_blank" rel="noopener">linkedin.com/in/yashpatidar1</a></span></div>
+      <div class="c-row"><span class="k">Location</span><span class="v">London, United Kingdom</span></div>
+      <div class="c-row"><span class="k">Current</span><span class="v">MSc Cybersecurity, KCL — working part-time alongside study</span></div>
+      <div class="c-row"><span class="k">Seeking</span><span class="v ok">Security analyst · vulnerability management · SOC — London</span></div>
+      <div class="c-row"><span class="k">Notice</span><span class="v">Available immediately</span></div>
+      
+      <div class="c-row"><span class="k">Phone</span><span class="v"><a href="tel:+447352668133">+44 7352 668133</a></span></div>
+      
     </div>
-    <div class="cards reveal">
+  </section>
 
-      <div class="card">
-        <p class="kicker">Certification</p>
-        <h3>CompTIA Security+</h3>
-        <p class="score">767 / 900</p>
-        <p>Threat management, cryptography, identity and access management, network security.</p>
-      </div>
-
-      <div class="card">
-        <p class="kicker">Practice</p>
-        <h3>TryHackMe</h3>
-        <p class="score">Top 1% globally</p>
-        <p>Sustained across penetration testing, web exploitation, reverse engineering and CTF. This is where most of my offensive practice happens — the closest thing to adversarial conditions I can get outside a real engagement.</p>
-      </div>
-
-      <div class="card">
-        <p class="kicker">Project</p>
-        <h3>LangChain Book Reader</h3>
-        <p class="score">Python · retrieval</p>
-        <p>Ingests full-length books and answers natural-language questions over the whole text. Built partly to learn how retrieval behaves when the source document is far larger than any context window, and partly because I wanted it.</p>
-      </div>
-
-      <div class="card">
-        <p class="kicker">Training</p>
-        <h3>Bits and Bytes of Computer Networking</h3>
-        <p class="score">Google · 96.31%</p>
-        <p>Protocols, packet analysis and infrastructure fundamentals — fed directly into the network-level work at FIS.</p>
-      </div>
-
-      <div class="card">
-        <p class="kicker">Education</p>
-        <h3>MSc Cybersecurity</h3>
-        <p class="score">King's College London · 2025–present</p>
-        <p>Network security, applied cryptography, digital forensics, malware analysis, secure software engineering.</p>
-      </div>
-
-      <div class="card">
-        <p class="kicker">Education</p>
-        <h3>BSc Computer Science</h3>
-        <p class="score">SSCBS, New Delhi · 2023</p>
-        <p>Recognised for outstanding contribution to the ACM Society.</p>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ============ CONTACT ============ -->
-<section class="section" id="contact">
-  <div class="wrap">
-    <div class="rail reveal">
-      <h2>~/contact</h2>
-      <p>Fastest route is email.</p>
-    </div>
-    <div class="reveal">
-      <div class="contact-grid">
-        <div class="contact-row">
-          <span class="k">Email</span>
-          <a href="mailto:yash.patidar@kcl.ac.uk">yash.patidar@kcl.ac.uk</a>
-        </div>
-        <div class="contact-row">
-          <span class="k">LinkedIn</span>
-          <a href="https://linkedin.com/in/yashpatidar1" target="_blank" rel="noopener">linkedin.com/in/yashpatidar1</a>
-        </div>
-        <div class="contact-row">
-          <span class="k">Location</span>
-          <span>London, United Kingdom</span>
-        </div>
-        
-        <div class="contact-row">
-          <span class="k">Phone</span>
-          <a href="tel:+447352668133">+44 7352 668133</a>
-        </div>
-        
-      </div>
-      <p class="status-note">
-        Currently: MSc Cybersecurity at KCL, working part-time alongside it.<br>
-        Open to security analyst / vulnerability management roles in London.
-      </p>
-    </div>
-  </div>
-</section>
-</main>
+  </main>
+</div>
+</div>
 
 <footer>
-  <div class="wrap">
-    <span>© <span id="year"></span> Yash Patidar</span>
-    <span>Built by hand. No trackers.</span>
+  <div class="shell">
+    <span>Document YP/CA/2026-08 · Rev 2.0 · TLP:CLEAR · © <span id="yr"></span> Yash Patidar</span>
+    <span class="hash">Integrity: <code id="hash">computing…</code></span>
   </div>
 </footer>
 
 <script>
 (function(){
   "use strict";
-  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  document.getElementById("yr").textContent = new Date().getFullYear();
 
-  /* ---------- year ---------- */
-  document.getElementById("year").textContent = new Date().getFullYear();
+  /* Export */
+  document.getElementById("print-btn").addEventListener("click", function(){ window.print(); });
 
-  /* ---------- boot sequence ---------- */
-  var bootLines = [
-    "init: loading profile...",
-    "mount /dev/experience ......... <b>ok</b>",
-    "verifying credentials ......... <b>ok</b>",
-    "sec+ / kcl / thm top 1% ....... <b>ok</b>",
-    "handshake complete."
-  ];
-  var boot = document.getElementById("boot");
-  var bootLog = document.getElementById("boot-log");
-
-  function endBoot(){
-    if(!boot || boot.classList.contains("gone")) return;
-    boot.classList.add("gone");
-    setTimeout(function(){ if(boot && boot.parentNode) boot.parentNode.removeChild(boot); }, 500);
-    startTyping();
-  }
-  document.getElementById("boot-skip").addEventListener("click", endBoot);
-
-  if(reduced){
-    endBoot();
-  } else {
-    bootLines.forEach(function(line, i){
-      setTimeout(function(){
-        var p = document.createElement("div");
-        p.className = "ln";
-        p.innerHTML = line;
-        bootLog.appendChild(p);
-      }, i * 210);
-    });
-    setTimeout(endBoot, bootLines.length * 210 + 400);
-  }
-
-  /* ---------- hero typing ---------- */
-  var phrases = [
-    "vulnerability management",
-    "SIEM triage & incident response",
-    "web application testing",
-    "OWASP Top 10",
-    "python + LLM tooling"
-  ];
-  var typedEl = document.getElementById("typed");
-  var started = false;
-
-  function startTyping(){
-    if(started) return;
-    started = true;
-    if(reduced){
-      typedEl.textContent = phrases.join(" · ");
-      return;
-    }
-    var pi = 0, ci = 0, deleting = false;
-    (function tick(){
-      var word = phrases[pi];
-      ci = deleting ? ci - 1 : ci + 1;
-      typedEl.innerHTML = word.slice(0, ci) + '<i class="cursor"></i>';
-      var wait = deleting ? 32 : 62;
-      if(!deleting && ci === word.length){ deleting = true; wait = 1600; }
-      else if(deleting && ci === 0){ deleting = false; pi = (pi + 1) % phrases.length; wait = 320; }
-      setTimeout(tick, wait);
-    })();
-  }
-
-  /* ---------- interactive terminal ---------- */
-  var body  = document.getElementById("term-body");
-  var input = document.getElementById("term-input");
-
-  function print(html, cls){
-    var p = document.createElement("p");
-    if(cls) p.className = cls;
-    p.innerHTML = html;
-    body.appendChild(p);
-    body.scrollTop = body.scrollHeight;
-  }
-  function echo(cmd){
-    print('<span class="ps1">yash@london:~$</span> ' + escapeHtml(cmd), "cmd");
-  }
-  function escapeHtml(s){
-    return s.replace(/[&<>"']/g, function(c){
-      return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
-    });
-  }
-  function go(id){
-    var el = document.getElementById(id);
-    if(el) el.scrollIntoView({behavior: reduced ? "auto" : "smooth"});
-  }
-
-  var commands = {
-    help: function(){
-      print("Available commands:");
-      print('  <span class="warn">whoami</span>      background and how I work');
-      print('  <span class="warn">experience</span>  where I have worked');
-      print('  <span class="warn">stack</span>       tools and technologies');
-      print('  <span class="warn">proof</span>       certifications and projects');
-      print('  <span class="warn">contact</span>     how to reach me');
-      print('  <span class="warn">scan</span>        run a scan (you will see)');
-      print('  <span class="warn">clear</span>       clear this terminal');
-    },
-    whoami: function(){
-      print("yash — cybersecurity analyst, London.");
-      print('20 months at FIS Global. MSc Cybersecurity, KCL. Top 1% TryHackMe.', "dim");
-      go("whoami");
-    },
-    experience: function(){ print("Opening ~/experience ...", "dim"); go("experience"); },
-    stack:      function(){ print("Opening ~/stack ...", "dim"); go("stack"); },
-    skills:     function(){ commands.stack(); },
-    proof:      function(){ print("Opening ~/proof ...", "dim"); go("proof"); },
-    certs:      function(){ commands.proof(); },
-    projects:   function(){ commands.proof(); },
-    contact: function(){
-      print('email .... <a href="mailto:yash.patidar@kcl.ac.uk">yash.patidar@kcl.ac.uk</a>');
-      print('linkedin . <a href="https://linkedin.com/in/yashpatidar1" target="_blank" rel="noopener">/in/yashpatidar1</a>');
-      go("contact");
-    },
-    ls: function(){
-      print('whoami  experience  stack  proof  contact', "warn");
-    },
-    scan: function(){
-      print("Starting scan on target: <span class=\"warn\">this_candidate</span> ...", "dim");
-      var findings = [
-        ['<span class="crit">CRITICAL</span>', 'Will not stop until root cause is found'],
-        ['<span class="warn">HIGH</span>    ', 'Reads the vendor advisory before the headline'],
-        ['<span class="warn">MEDIUM</span>  ', 'Writes reports non-technical directors can act on'],
-        ['<span class="ok">LOW</span>     ', 'Mildly obsessive about false positives'],
-        ['<span class="ok">INFO</span>    ', 'Available for interview immediately']
-      ];
-      findings.forEach(function(f, i){
-        setTimeout(function(){ print("  [" + f[0] + "] " + f[1]); }, 320 * (i + 1));
-      });
-      setTimeout(function(){
-        print('Scan complete. 5 findings. <span class="ok">Recommended action: hire.</span>');
-      }, 320 * (findings.length + 1));
-    },
-    sudo: function(){
-      print("Nice try.", "crit");
-    },
-    clear: function(){ body.innerHTML = ""; },
-    exit: function(){ print("There is no exit. Only ~/contact.", "dim"); }
-  };
-
-  function run(raw){
-    var cmd = raw.trim().toLowerCase();
-    if(!cmd) return;
-    echo(raw);
-    var name = cmd.split(/\s+/)[0];
-    if(commands[name]) commands[name]();
-    else print("command not found: " + escapeHtml(name) + " — type <span class=\"warn\">help</span>", "crit");
-  }
-
-  var history = [], hIndex = -1;
-  input.addEventListener("keydown", function(e){
-    if(e.key === "Enter"){
-      var v = input.value;
-      if(v.trim()){ history.push(v); hIndex = history.length; }
-      run(v);
-      input.value = "";
-    } else if(e.key === "ArrowUp"){
-      if(hIndex > 0){ hIndex--; input.value = history[hIndex]; e.preventDefault(); }
-    } else if(e.key === "ArrowDown"){
-      if(hIndex < history.length - 1){ hIndex++; input.value = history[hIndex]; }
-      else { hIndex = history.length; input.value = ""; }
+  /* Copy email */
+  var cb = document.getElementById("copy-email");
+  cb.addEventListener("click", function(){
+    var addr = "yash.patidar@kcl.ac.uk";
+    var done = function(){ cb.textContent = "Copied"; setTimeout(function(){ cb.textContent = "Copy"; }, 1800); };
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(addr).then(done).catch(function(){ cb.textContent = "Select manually"; });
+    } else {
+      var t = document.createElement("textarea");
+      t.value = addr; document.body.appendChild(t); t.select();
+      try{ document.execCommand("copy"); done(); }catch(e){ cb.textContent = "Select manually"; }
+      document.body.removeChild(t);
     }
   });
 
-  print('Last login: ' + new Date().toDateString(), "dim");
-  print('Type <span class="warn">help</span> to see what is here, or just scroll.', "dim");
+  /* Scroll-spy contents */
+  var links = Array.prototype.slice.call(document.querySelectorAll(".toc a[href^='#']"));
+  var secs  = links.map(function(a){ return document.querySelector(a.getAttribute("href")); }).filter(Boolean);
+  function spy(){
+    var y = window.scrollY + 140, active = 0;
+    secs.forEach(function(s, i){ if(s.offsetTop <= y) active = i; });
+    links.forEach(function(a, i){ a.classList.toggle("on", i === active); });
+  }
+  var ticking = false;
+  window.addEventListener("scroll", function(){
+    if(ticking) return;
+    ticking = true;
+    window.requestAnimationFrame(function(){ spy(); ticking = false; });
+  }, {passive:true});
+  spy();
 
-  /* ---------- scroll reveal ---------- */
-  if("IntersectionObserver" in window && !reduced){
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(en){
-        if(en.isIntersecting){ en.target.classList.add("seen"); io.unobserve(en.target); }
-      });
-    }, {threshold: .12});
-    document.querySelectorAll(".reveal").forEach(function(el){ io.observe(el); });
+  /* Inventory filter */
+  var fbtns = Array.prototype.slice.call(document.querySelectorAll(".filters button"));
+  var rows  = Array.prototype.slice.call(document.querySelectorAll("#inv tbody tr"));
+  fbtns.forEach(function(b){
+    b.addEventListener("click", function(){
+      var f = b.dataset.f;
+      fbtns.forEach(function(x){ x.setAttribute("aria-pressed", String(x === b)); });
+      rows.forEach(function(r){ r.style.display = (f === "all" || r.dataset.d === f) ? "" : "none"; });
+    });
+  });
+
+  /* Document integrity hash — computed from the rendered report text.
+     Hidden gracefully where SubtleCrypto is unavailable (e.g. file:// in some browsers). */
+  var out = document.getElementById("hash");
+  var el  = document.querySelector("main");
+  if(window.crypto && window.crypto.subtle && window.TextEncoder && el){
+    var text = el.innerText.replace(/\s+/g, " ").trim();
+    window.crypto.subtle.digest("SHA-256", new TextEncoder().encode(text)).then(function(buf){
+      var hex = Array.prototype.map.call(new Uint8Array(buf), function(b){
+        return ("00" + b.toString(16)).slice(-2);
+      }).join("");
+      out.textContent = "sha256:" + hex.slice(0, 32);
+    }).catch(function(){ out.parentNode.style.display = "none"; });
   } else {
-    document.querySelectorAll(".reveal").forEach(function(el){ el.classList.add("seen"); });
+    out.parentNode.style.display = "none";
   }
 })();
 </script>
